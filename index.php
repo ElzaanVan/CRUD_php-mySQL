@@ -40,8 +40,8 @@ $connect = mysqli_connect('localhost', 'root', '', 'tasklist');
                             echo '<tr>';
                             echo "<td>{$id}</td>";
                             echo "<td class='col-md-10'>{$task_name}</td>";
-                            echo '<td><a href="" class="btn btn-primary btn-sm">Update</a></td>';
-                            echo '<td><a href="" class="btn btn-danger btn-sm">Delete</a></td>';
+                            echo "<td><a href='update.php' class='btn btn-primary btn-sm'>Update</a></td>";
+                            echo "<td><a href='delete.php?id={$id}' class='btn btn-danger btn-sm'>Delete</a></td>";
                             echo '</tr>';
                         }
 
