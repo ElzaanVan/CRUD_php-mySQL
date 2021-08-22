@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<?php include "db.php";
+$connect = mysqli_connect('localhost', 'root', '', 'tasklist');
+?>
+
 <html>
 
 <head>
@@ -10,7 +14,7 @@
     <div class="container py-5">
         <div class="row">
             <center>
-                <h1>Todo</h1>
+                <h1>Todo List</h1>
             </center>
             <div class="col-md-10 col-md-offset-1">
                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#taskModal">Add Task</button>
@@ -23,12 +27,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td class="col-md-10">Mark</td>
-                            <td><a href="" class="btn btn-primary btn-sm">Update</a></td>
-                            <td><a href="" class="btn btn-danger btn-sm">Delete</a></td>
-                        </tr>
+
+                        <?php
+                        global $connect;
+                        $query = "SELECT * FROM task";
+                        $all_tasks = mysqli_query($connect, $query);
+
+                        while ($row = mysqli_fetch_assoc($all_tasks)) {
+                            $id = $row['id'];
+                            $task_name = $row['task_name'];
+
+                            echo '<tr>';
+                            echo "<td>{$id}</td>";
+                            echo "<td class='col-md-10'>{$task_name}</td>";
+                            echo '<td><a href="" class="btn btn-primary btn-sm">Update</a></td>';
+                            echo '<td><a href="" class="btn btn-danger btn-sm">Delete</a></td>';
+                            echo '</tr>';
+                        }
+
+                        ?>
+
                     </tbody>
                 </table>
                 <button class="btn btn-outline-dark float-right">Print</button>
@@ -46,11 +64,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
+                    <form method="post" action="add.php">
                         <div class="form-group">
                             <label for="task">Task Name</label>
                             <input type="text" value="Your Task" name="task" id="task" class="form-control" required>
-                            <input type="submit" value="send" name="send" class="btn btn-success btn-small mt-3">
+                            <input type="submit" value="Add Task" name="send" class="btn btn-success btn-small mt-3">
                         </div>
                     </form>
                 </div>
